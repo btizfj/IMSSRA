@@ -1,0 +1,105 @@
+/*登录界面2*/
+body{
+    margin: 0;
+    padding: 0;
+    background: #EFF4F8;
+}
+/*登录页面顶部样式*/
+.nav {
+    display: flex;
+    height: 40px;
+    background: #AA2428;
+    margin-top: 40px;
+    align-content: center;
+    justify-content: center
+}
+
+.nav span {
+    color: white;
+    line-height: 40px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.nav span:hover {
+    color: yellow;
+    line-height: 40px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.nav a {
+    text-decoration: none;
+}
+/*登录页面顶部样式*/
+
+/*登录框样式*/
+.login_shape{
+    width: 550px;
+    height: 350px;
+    border: 1px solid #EAEAEA;
+    border-radius: 5px;
+    background: white;
+}
+.login_title{
+    font-size: 20px;
+    display:  block;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    color: black;
+}
+.login_table{
+    width: 310px;
+    border: 1px solid #EAEAEA;
+    border-radius: 5px;
+}
+.login_table td{
+    display: flex;
+}
+.login_table input{
+    height: 40px;
+    width: 90%;
+    padding-left: 5px;
+    border: none;
+    outline: none;
+    color: #757575;
+}
+.login_table img{
+    width: 10px;
+    height: 10px;
+}
+.login_btn{
+    width: 310px;
+    height: 40px;
+    border: 1px solid #EAEAEA;
+    border-radius: 5px;
+    background: #3582F8;
+    font-size: 16px;
+    color: white;
+    margin-bottom: 40px;
+}
+.login_input_text{
+    border-bottom:1px solid #EAEAEA;
+}
+.login_classfy{
+    border: none;
+    width: 310px;
+    height: 40px;
+    border-radius: 5px;
+    outline: none;
+}
+.login_resetPass{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: gray;
+    font-size: 12px;
+    text-decoration: none;
+}
+.login_hint{
+    color: red;
+}
+
+.login_loading{
+    color: green;
+}
+/*登录框样式*/
