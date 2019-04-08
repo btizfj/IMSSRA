@@ -84,6 +84,9 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/adminMain" onclick="openModel()">成果查看</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/myMessage" onclick="openModel()">我的消息</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/resultTrial" onclick="openModel()">成果审核</a>
             </li>
             <li class="nav-item">
@@ -99,7 +102,10 @@
                 <a class="nav-link" href="#" style="color: aqua">运行时段</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/notificationManagement" onclick="openModel()">通知管理</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/deliverManagement" onclick="openModel()">发布通知</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/notificationManagement" onclick="openModel()">管理通知</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/exportInfo" onclick="openModel()">信息导出</a>
@@ -143,7 +149,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <span style="font-size: 20px"><span style="color: red">注意：</span><span>关闭网站后该网站不可访问！</span></span>
+                    <span style="font-size: 20px"><span style="color: red">注意：</span><span>关闭网站后其他非管理员用户不可访问该网站！</span></span>
                 </div>
             </div>
         </div>

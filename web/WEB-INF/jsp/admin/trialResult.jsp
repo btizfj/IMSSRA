@@ -23,7 +23,7 @@
 <body>
 
 <div class="container-fluid">
-    <div class="row" style="background: green">
+    <div class="row" style="background: #15757A">
         <div class="col">
             <div style="padding: 20px;color: white" align="center">
                 <h1>成果审核</h1>
@@ -79,7 +79,7 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td>下载成果：<a href="${pageContext.request.contextPath}/upload/${result.filename}" class="text-primary">导出</a></td>
+                            <td>下载成果：<a href="${pageContext.request.contextPath}/downloadFile?type=1&rst_id=${result.id}" class="text-primary">导出</a></td>
                             <td></td>
                         </tr>
                         <tr>
@@ -88,7 +88,7 @@
                         </tr>
                         <tr>
                             <td align="center" colspan="2">
-                                <form action="${pageContext.request.contextPath}/submitResultComment" method="post">
+                                <form action="${pageContext.request.contextPath}/submitResultComment">
                                 <div class="card">
                                     <div class="card-body">
                                         <h3 align="center">审核区</h3>

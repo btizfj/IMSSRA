@@ -39,6 +39,44 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+        <url-pattern>*.css</url-pattern>
+        <url-pattern>*.jpg</url-pattern>
+        <url-pattern>*.jpeg</url-pattern>
+        <url-pattern>*.png</url-pattern>
+        <url-pattern>*.gif</url-pattern>
+        <url-pattern>*.html</url-pattern>
+        <url-pattern>*.eot</url-pattern>
+        <url-pattern>*.svg</url-pattern>
+        <url-pattern>*.ttf</url-pattern>
+        <url-pattern>*.woff</url-pattern>
+        <url-pattern>*.woff2</url-pattern>
+        <url-pattern>*.doc</url-pattern>
+        <url-pattern>*.docx</url-pattern>
+        <url-pattern>*.xlsx</url-pattern>
+        <url-pattern>*.txt</url-pattern>
+        <url-pattern>*.zip</url-pattern>
+    </servlet-mapping>
+
+    <!--设置session默认过期时间（单位是分钟）-->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <!--<filter>-->
+        <!--<filter-name>timoutFilter</filter-name>-->
+        <!--<filter-class>com.cn.yznu.imssra.interceptor.SessionFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>timoutFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+    <!--<session-config>-->
+        <!--<session-timeout>1</session-timeout>-->
+    <!--</session-config>-->
+
     <!--欢迎界面-->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

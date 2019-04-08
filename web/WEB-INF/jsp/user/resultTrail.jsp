@@ -84,6 +84,9 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/userMainByType?type=0" onclick="openModel()">我的成果</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/myMessage" onclick="openModel()">我的消息</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/submitResult" onclick="openModel()">提交成果</a>
             </li>
             <li class="nav-item">

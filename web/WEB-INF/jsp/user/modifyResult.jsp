@@ -70,6 +70,7 @@
             }
         }
         function doUpload() {
+            openModel();
             var jsonObj = {};
             editor1.sync();
             var rst_name = $("#rst_name").val();//成果名称
@@ -105,10 +106,13 @@
             }
             return true;
         }
+        function openModel() {
+            $('#myModal').modal('show');
+        }
     </script>
 </head>
 <body>
-<div style="background: green">
+<div style="background: #15757A">
     <div class="col">
         <div style="padding: 20px;color: white" align="center">
             <h1>修改成果</h1>
@@ -208,6 +212,15 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg" style="margin-top: 270px" align="center">
+            <!--正在加载...-->
+            <div class="mx-auto">
+                <img width="30px" height="30px" src="${pageContext.request.contextPath}/imgs/pic_loading.gif">
+            </div>
         </div>
     </div>
 

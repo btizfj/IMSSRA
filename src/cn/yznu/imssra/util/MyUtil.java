@@ -2,6 +2,11 @@ package cn.yznu.imssra.util;
 
 import cn.yznu.imssra.bean.User;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.*;
+
 import static cn.yznu.imssra.util.constants.Constant.*;
 
 public class MyUtil {

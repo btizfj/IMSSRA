@@ -129,4 +129,65 @@ public interface UserDao {
 
     @UpdateProvider(type= UserDynamicSqlProvider.class,method="updateResultToDB")
     void updateResult(Result result);
+
+    @SelectProvider(type=UserDynamicSqlProvider.class,method="selectResultBySearch")
+    List<Result> selectResultBySearch(Integer rst_number,String rst_name);
+
+    @SelectProvider(type=UserDynamicSqlProvider.class,method="selectAllNotificationByPageAndType")
+    List<Notification> selectAllNotificationByPageAndType(Map<String,Object> params);
+
+    @Select("select count(*) from " + NOTIFICATIONTABLE + " where type=#{n_type}")
+    int countAllNotificationByPageAndType(Integer n_type);
+
+    @Select("select count(*) from " + RESULTTABLE + " where isgood=1")
+    int countAllGoodResultByPage();
+
+    @SelectProvider(type=UserDynamicSqlProvider.class,method="selectAllGoodResultByPageAndType")
+    List<Result> selectAllGoodResultByPageAndType(Map<String, Object> params);
+
+    @SelectProvider(type=UserDynamicSqlProvider.class,method="updateCommentById")
+    void updateCommentById(String result_comment, Integer result_id);
+
+    @SelectProvider(type=UserDynamicSqlProvider.class,method="selectAllMessageByIdOfUser")
+//    @Select("select count(*) from " + MESSAGETABEL + " where user_id=#{userid}")
+    List<Message> selectAllMessageByUserId(Map<String, Object> params);
+
+    @Delete("delete from " + MESSAGETABEL + " where id=#{message_id}")
+    void deleteMessageByUserId(Integer message_id);
+
+    @Select("select count(*) from " + MESSAGETABEL + " where user_id=#{userid}")
+    int countAllMessageByUserId(Integer userid);
+
+    @Insert("INSERT INTO "+ MESSAGETABEL +"(user_id, content, time) VALUES(#{user_id}, #{result_id}, #{date})")
+    void insertMessage1(Map<String,Object> params);
+
+    @Insert("INSERT INTO "+ MESSAGETABEL +"(user_id, content, time) VALUES(#{user_id}, #{result_id}, #{date})")
+    void insertMessage2(Map<String,Object> params);
+
+    @Select("select count(*) from " + MESSAGETABEL + " where usertype=1")
+    int countAllAdminMessage();
+
+    @SelectProvider(type=UserDynamicSqlProvider.class,method="selectAllAdminMessage")
+    List<Message> selectAllAdminMessage(Map<String, Object> params);
+
+    @Insert("INSERT INTO "+ MESSAGETABEL +"(usertype, content, time) VALUES(1,#{content}, #{date})")
+    void insertMessageForSubmit(Map<String,Object> params);
+
+    @Insert("INSERT INTO "+ MESSAGETABEL +"(usertype, content, time) VALUES(1,#{content}, #{date})")
+    void insertMessageForModify(Map<String,Object> params);
+
+    @Delete("delete from " + USERTABLE + " where id=#{id}")
+    void deleteUserById(Integer id);
+
+    @Delete("delete from " + RESULTTABLE + " where id=#{id}")
+    void deleteResultById(Integer id);
+
+    @Select("select count(*) from " + NOTIFICATIONTABLE )
+    int countAllNotification();
+
+    @SelectProvider(type=UserDynamicSqlProvider.class,method="selectAllNotification")
+    List<Notification> selectAllNotification(Map<String, Object> params);
+
+    @Delete("delete from " + NOTIFICATIONTABLE + " where id=#{id}")
+    void deleteNotificationById(Integer id);
 }

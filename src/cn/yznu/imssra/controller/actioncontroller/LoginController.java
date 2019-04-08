@@ -3,6 +3,7 @@ package cn.yznu.imssra.controller.actioncontroller;
 import cn.yznu.imssra.bean.Notification;
 import cn.yznu.imssra.bean.Result;
 import cn.yznu.imssra.bean.User;
+import cn.yznu.imssra.bean.WebSatet;
 import cn.yznu.imssra.service.ImssraService;
 import cn.yznu.imssra.util.MyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +49,20 @@ public class LoginController {
             //用pw对象传递json
             pw.print("failed");
         }else{//账号密码都正确，跳转到主页
+            System.out.println(user.getUsertype());
             session.setAttribute("user",user);
-            String url = MyUtil.getPage(user);
-            pw.print(url);
+            WebSatet webSatet = imssraService.findWebSatet();
+            if (webSatet.getIsopen() == 0){//网站关闭
+                if (user.getUsertype() != 2){//普通用户
+                    pw.print("close");
+                }else {//管理员
+                    String url = MyUtil.getPage(user);
+                    pw.print(url);
+                }
+            }else {
+                String url = MyUtil.getPage(user);
+                pw.print(url);
+            }
         }
         pw.flush();
         pw.close();

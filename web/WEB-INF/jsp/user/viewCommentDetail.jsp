@@ -22,7 +22,7 @@
 <body>
 
 <div class="container-fluid">
-    <div class="row" style="background: green">
+    <div class="row" style="background: #15757A">
         <div class="col">
             <div style="padding: 20px;color: white" align="center">
                 <h1>查看审核信息</h1>

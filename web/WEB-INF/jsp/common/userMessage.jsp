@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>我的成果</title>
+    <title>我的消息</title>
     <link rel="icon" href="${pageContext.request.contextPath}/imgs/yznu_logo.jpg" type="image/x-icon"/>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/imgs/yznu_logo.jpg" type="image/x-icon"/>
     <meta charset="utf-8">
@@ -81,10 +81,10 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#" style="color: aqua">我的成果</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/userMainByType?type=0">我的成果</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/myMessage" onclick="openModel()">我的消息</a>
+                <a class="nav-link" onclick="openModel()" style="color: aqua">我的消息</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/submitResult" onclick="openModel()">提交成果</a>
@@ -108,101 +108,40 @@
 
 <div class="container" style="margin-top:80px">
     <form action="${pageContext.request.contextPath}/userMainByType">
-    <div class="row">
-        <!--<div class="col-1" style="line-height: 38px">条件选择</div>-->
-        <div class="col-sm-12 col-xl-2 col-md-4">
-            <select class="form-control" id="year" name="year">
-                <option value="-1">选择年份</option>
-                <option value="2017">2017</option>
-                <option value="2018">2018</option>
-                <option value="2019">2019</option>
-            </select>
-        </div>
-        <div class="col-sm-12 col-xl-2 col-md-4">
-            <select class="form-control" id="collegename" name="collegename">
-                <option value="-1">选择学院</option>
-                <option value="0">文学院</option>
-                <option value="1">传媒学院</option>
-                <option value="2">计算机学院</option>
-                <option value="3">财经学院</option>
-                <option value="4">管理学院</option>
-                <option value="5">美术学院</option>
-                <option value="6">体育学院</option>
-                <option value="7">化工化学学院</option>
-                <option value="8">外国语学院</option>
-            </select>
-        </div>
-        <div class="col-sm-12 col-xl-2 col-md-4">
-            <select class="form-control" id="trialstate" name="trialstate">
-                <option value="-1">所有状态</option>
-                <option value="0">正在审核</option>
-                <option value="1">审核失败</option>
-                <option value="2">审核通过</option>
-            </select>
-        </div>
-        <div class="col-sm-12 col-xl-2 col-md-4">
-            <select class="form-control" id="type_big" name="type_big" onchange="type_change()">
-                <option value="-1">所有大类</option>
-                <option value="0">基础理论成果</option>
-                <option value="1">应用技术成果</option>
-                <option value="2">软科学成果</option>
-            </select>
-        </div>
-        <div class="col-sm-12 col-xl-2 col-md-4">
-            <select class="form-control" id="type_small" name="type_small">
-                <option value="-1">所有小类</option>
-            </select>
-        </div>
-        <div class="col-sm-12 col-xl-2 col-md-4" style="line-height: 35px">
-            <input type="hidden" id="type" name="type" value="0">
-            <button type="submit" class="btn btn-primary btn-sm">立即查询</button>
-        </div>
-    </div>
+
     </form>
     <div class="row" style="margin-top: 10px">
         <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>编号</th>
-                <th>年份</th>
-                <th>成果名称</th>
-                <th>所属大类</th>
-                <th>所属小类</th>
-                <th>所属学院</th>
-                <th>审核状态</th>
-                <th>上传日期</th>
-                <th>成果修改</th>
-                <th>成果详情</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${results}" var="result" varStatus="stat">
+            <table class="table table-bordered">
+                <thead>
                 <tr>
-                    <td>${stat.index+1}</td>
-                    <td>${fn:split(result.time, "-")[0]}</td>
-                    <td>${result.resultname}</td>
-                    <td>${type_big[result.typebig]}</td>
-                    <td>${type_small[result.typesmall]}</td>
-                    <td>${colleges[result.collegename]}</td>
-                    <td>${trail_state[result.trailstate]}</td>
-                    <td>${result.time}</td>
-                    <td><a href="${pageContext.request.contextPath}/modifyResult?result_id=${result.id}" target="_blank" class="text-primary">修改</a></td>
-                    <td><a href="${pageContext.request.contextPath}/viewResultDetail?result_id=${result.id}" target="_blank" class="text-primary">查看</a></td>
+                    <th>编号</th>
+                    <th>消息内容</th>
+                    <th>时间</th>
+                    <th>操作</th>
                 </tr>
-            </c:forEach>
-            <!-- 分页标签 -->
-            <tr valign="top">
-                <td align="center" colspan="12" rowspan="2">
-                    <fkjava:pager
-                            pageIndex="${requestScope.pageModel.pageIndex}"
-                            pageSize="${requestScope.pageModel.pageSize}"
-                            recordCount="${requestScope.pageModel.recordCount}"
-                            submitUrl="${pageContext.request.contextPath}/userMainByType?type=0"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <c:forEach items="${messages}" var="message" varStatus="stat">
+                    <tr>
+                        <td>${stat.index+1}</td>
+                        <td>${message.content}</td>
+                        <td>${message.time}</td>
+                        <td><a href="${pageContext.request.contextPath}/deleteMessage?message_id=${message.id}" class="text-primary">删除</a></td>
+                    </tr>
+                </c:forEach>
+                <!-- 分页标签 -->
+                <tr valign="top">
+                    <td align="center" colspan="12" rowspan="2">
+                        <fkjava:pager
+                                pageIndex="${requestScope.pageModel.pageIndex}"
+                                pageSize="${requestScope.pageModel.pageSize}"
+                                recordCount="${requestScope.pageModel.recordCount}"
+                                submitUrl="${pageContext.request.contextPath}/myMessage"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 

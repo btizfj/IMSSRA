@@ -1,27 +1,24 @@
 package cn.yznu.imssra.controller.pagecontroller;
 
 import cn.yznu.imssra.POI.POIUtil;
-import cn.yznu.imssra.bean.Notification;
-import cn.yznu.imssra.bean.Result;
-import cn.yznu.imssra.bean.User;
-import cn.yznu.imssra.bean.WebSatet;
+import cn.yznu.imssra.bean.*;
 import cn.yznu.imssra.service.ImssraService;
 import cn.yznu.imssra.util.MyUtil;
 import cn.yznu.imssra.util.constants.Constant;
 import cn.yznu.imssra.util.tag.PageModel;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.portlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -137,29 +134,6 @@ public class MainPageController {
         return "user/submitResult";
     }
 
-    @RequestMapping(value = "/resultTrial")
-    public String resultTrial(Integer pageIndex, Model model,Integer year,Integer collegename,Integer trialstate,Integer type_big,Integer type_small){
-        // 创建分页对象
-        PageModel pageModel = new PageModel();
-        // 如果参数pageIndex不为null，设置pageIndex，即显示第几页
-        if(pageIndex != null){
-            pageModel.setPageIndex(pageIndex);
-        }
-        List<Result> results = null;
-        if (year == null && collegename == null && trialstate == null && type_big == null && type_small == null){//默认条件下查询
-            results = imssraService.findAllResultList(pageModel);
-        }else {//按条件分页查询
-            results = imssraService.findResultListByCondition2(year,collegename,trialstate,type_big,type_small,pageModel);
-        }
-        model.addAttribute("pageModel", pageModel);
-        model.addAttribute("results", results);
-        model.addAttribute("type_big", Constant.type_big);
-        model.addAttribute("type_small", Constant.type_small);
-        model.addAttribute("colleges", Constant.colleges);
-        model.addAttribute("trail_state", Constant.trail_state);
-        return "admin/resultTrial";
-    }
-
     @RequestMapping(value = "/setGoodResult")
     public String setGoodResult(Integer pageIndex, Model model,Integer year,Integer collegename,Integer trialstate,Integer type_big,Integer type_small){
         // 创建分页对象
@@ -209,7 +183,7 @@ public class MainPageController {
     }
 
     @RequestMapping(value = "/exportResult")
-    public String exportResult(Model model,HttpServletRequest request,Integer year, Integer collegename, Integer trialstate, Integer type_big, Integer type_small){
+    public String exportResult(Model model, HttpServletResponse response, HttpServletRequest request, Integer year, Integer collegename, Integer trialstate, Integer type_big, Integer type_small){
         List<Result> results = null;
         if (year == null && collegename == null && trialstate == null && type_big == null && type_small == null){//默认条件下查询
             results = imssraService.findAllResultList();
@@ -220,13 +194,78 @@ public class MainPageController {
 //        imssraService.findUserById();
         String url = null;
         try {
-            url = POIUtil.generateDocx(results,imssraService,request);
+            url = POIUtil.generateDocx(results,imssraService,request,response);
+//            MyUtil.download("info.xlsx",url,request,response);
+//            try {
+//                MyUtil.download("info.xlsx",url,request,response);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         } catch (IOException e) {
             System.out.println("异常");
             e.printStackTrace();
         }
         model.addAttribute("url",url);
         return "common/download";
+//        return "admin/exportInfo";
+    }
+
+    @RequestMapping(value = "/downloadFile")
+    public String download(Integer type, Integer rst_id, HttpServletRequest request, HttpServletResponse response) {
+        String bashPath = request.getSession().getServletContext().getRealPath("/upload");
+        String fileName = null;
+        switch (type){
+            case 0://管理员下载统计信息表info.xlsx
+                fileName = "info.xlsx";
+                break;
+            case 1://下载成果文件
+                Result result = imssraService.findResultById(rst_id);
+                fileName = result.getFilename();
+                break;
+        }
+        if (fileName != null) {
+//            String realPath = request.getServletContext().getRealPath("WEB-INF/File/");
+            File file = new File(bashPath, fileName);
+            if (file.exists()) {
+                response.setContentType("application/force-download");// 设置强制下载不打开
+                response.addHeader("Content-Disposition",
+                        "attachment;fileName=" + fileName);// 设置文件名
+                byte[] buffer = new byte[1024];
+                FileInputStream fis = null;
+                BufferedInputStream bis = null;
+                try {
+                    fis = new FileInputStream(file);
+                    bis = new BufferedInputStream(fis);
+                    OutputStream os = response.getOutputStream();
+                    int i = bis.read(buffer);
+                    while (i != -1) {
+                        os.write(buffer, 0, i);
+                        i = bis.read(buffer);
+                    }
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                } finally {
+                    if (bis != null) {
+                        try {
+                            bis.close();
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    if (fis != null) {
+                        try {
+                            fis.close();
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     @RequestMapping(value = "/accountAssignment")
@@ -271,6 +310,77 @@ public class MainPageController {
         return "admin/closeWebsite";
     }
 
+    @RequestMapping(value = "/resultSearch")
+    public String resultSearch(Integer rst_number,String rst_name,Model model){
+        List<Result> results = null;
+        if (rst_number != null && rst_name != null){
+            results = imssraService.findResultBySearch(rst_number,rst_name);
+        }
+        model.addAttribute("results",results);
+        return "common/resultSearch";
+    }
+
+    @RequestMapping(value = "/resultTrial")
+    public String resultTrial(Integer pageIndex, Model model,Integer year,Integer collegename,Integer trialstate,Integer type_big,Integer type_small){
+        // 创建分页对象
+        PageModel pageModel = new PageModel();
+        // 如果参数pageIndex不为null，设置pageIndex，即显示第几页
+        if(pageIndex != null){
+            pageModel.setPageIndex(pageIndex);
+        }
+        List<Result> results = null;
+        if (year == null && collegename == null && trialstate == null && type_big == null && type_small == null){//默认条件下查询
+            results = imssraService.findAllResultList(pageModel);
+        }else {//按条件分页查询
+            results = imssraService.findResultListByCondition2(year,collegename,trialstate,type_big,type_small,pageModel);
+        }
+        model.addAttribute("pageModel", pageModel);
+        model.addAttribute("results", results);
+        model.addAttribute("type_big", Constant.type_big);
+        model.addAttribute("type_small", Constant.type_small);
+        model.addAttribute("colleges", Constant.colleges);
+        model.addAttribute("trail_state", Constant.trail_state);
+        return "admin/resultTrial";
+    }
+
+    @RequestMapping(value = "/viewAllNotificationByPage")
+    public String viewAllNotificationByPage(Integer pageIndex, Integer n_type, Model model){
+        // 创建分页对象
+        PageModel pageModel = new PageModel();
+        // 如果参数pageIndex不为null，设置pageIndex，即显示第几页
+        if(pageIndex != null){
+            pageModel.setPageIndex(pageIndex);
+        }
+        List<Notification> notifications = null;
+        notifications = imssraService.findAllNotificationByPageAndType(n_type,pageModel);
+        System.out.println(notifications.size());
+        model.addAttribute("notifications",notifications);
+        model.addAttribute("pageModel", pageModel);
+        model.addAttribute("n_type", n_type);
+        model.addAttribute("resultType", Constant.resultType);
+        return "common/showAllNotification";
+    }
+
+    @RequestMapping(value = "/viewAllGoodResultByPage")
+    public String viewAllGoodResultByPage(Integer pageIndex, Model model){
+        // 创建分页对象
+        PageModel pageModel = new PageModel();
+        // 如果参数pageIndex不为null，设置pageIndex，即显示第几页
+        if(pageIndex != null){
+            pageModel.setPageIndex(pageIndex);
+        }
+        List<Result> results = null;
+        results = imssraService.findAllGoodResultByPage(pageModel);
+        System.out.println(results.size());
+        model.addAttribute("results",results);
+        model.addAttribute("pageModel", pageModel);
+        model.addAttribute("type_big", Constant.type_big);
+        model.addAttribute("type_small", Constant.type_small);
+        model.addAttribute("colleges", Constant.colleges);
+        model.addAttribute("trail_state", Constant.trail_state);
+        return "common/showAllGoodResult";
+    }
+
     @RequestMapping(value = "/modifyWebsiteState")
     public String modifyWebsiteState(String url,Integer state,Model model){
         imssraService.updateWebSatet(state);
@@ -281,20 +391,63 @@ public class MainPageController {
     @RequestMapping(value = "/setGoodResultById")
     public String setGoodResultById(Integer result_id, HttpServletResponse response) throws IOException {
         imssraService.updateGoodStateById(result_id);
+
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Result result = imssraService.findResultById(result_id);
+        Integer userid = result.getUserid();
+        imssraService.saveMessage1(userid,result_id,java.sql.Date.valueOf(sdf.format(d)));
         return "redirect:/setGoodResult";
     }
 
     @RequestMapping(value = "/addUserToDB")
-    public String addUserToDB(String url,Model model,
-                              String username,String password,Integer collegename,Integer role){
+    public String addUserToDB(String url,Model model, String username,String password,Integer collegename,Integer role){
         imssraService.addUser(username,password,collegename,role);
         model.addAttribute("url",url);
         return "common/submitSuccess";
     }
 
+    @RequestMapping(value = "/deliverManagement")
+    public String deliverManagement(){
+        return "admin/deliverManagement";
+    }
+
     @RequestMapping(value = "/notificationManagement")
-    public String notificationManagement(){
-        return "admin/notificationManagement";
+    public String notificationManagement(Integer pageIndex,Model model){
+        // 创建分页对象
+        PageModel pageModel = new PageModel();
+        // 如果参数pageIndex不为null，设置pageIndex，即显示第几页
+        if(pageIndex != null){
+            pageModel.setPageIndex(pageIndex);
+        }
+        List<Notification> notifications = null;
+        notifications = imssraService.findAllNotification(pageModel);
+        model.addAttribute("notifications",notifications);
+        model.addAttribute("pageModel", pageModel);
+        model.addAttribute("resultType", Constant.resultType);
+        return "admin/managementNotification";
+    }
+
+    @RequestMapping(value = "/sessionTimeout")
+    public String sessionTimeout(){
+        return "common/sessionTimeout";
+    }
+
+    @RequestMapping(value = "/deleteNotificationById")
+    public String deleteNotificationById(Integer pageIndex,Integer id,Model model){
+        imssraService.removeNotificationById(id);
+        // 创建分页对象
+        PageModel pageModel = new PageModel();
+        // 如果参数pageIndex不为null，设置pageIndex，即显示第几页
+        if(pageIndex != null){
+            pageModel.setPageIndex(pageIndex);
+        }
+        List<Notification> notifications = null;
+        notifications = imssraService.findAllNotification(pageModel);
+        model.addAttribute("notifications",notifications);
+        model.addAttribute("pageModel", pageModel);
+        model.addAttribute("resultType", Constant.resultType);
+        return "admin/managementNotification";
     }
 
 }

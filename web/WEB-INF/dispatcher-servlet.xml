@@ -6,7 +6,45 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <context:component-scan base-package="cn.yznu.imssra.controller"/>
+
     <mvc:default-servlet-handler/>
+
+    <!--设置SessionTimeoutInterceptor不拦截哪些请求，不然进不了第一页-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/main"/><!--启动页面-->
+            <mvc:exclude-mapping path="/usernameAndPasswordCheck"/><!--账户验证-->
+            <mvc:exclude-mapping path="/viewAllNotificationByPage"/>
+            <mvc:exclude-mapping path="/viewNotificationDetail"/>
+            <mvc:exclude-mapping path="/viewResultDetail"/>
+            <mvc:exclude-mapping path="/viewAllGoodResultByPage"/>
+            <mvc:exclude-mapping path="/resultSearch"/>
+            <mvc:exclude-mapping path="/viewAllNotificationByPage"/>
+            <mvc:exclude-mapping path="/sessionTimeout"/>
+            <mvc:exclude-mapping path="*.jpeg"/>
+            <mvc:exclude-mapping path="*.jpg"/>
+            <mvc:exclude-mapping path="*.png"/>
+            <mvc:exclude-mapping path="*.gif"/>
+            <mvc:exclude-mapping path="*.xlsx"/>
+            <mvc:exclude-mapping path="*.docx"/>
+            <mvc:exclude-mapping path="*.doc"/>
+            <mvc:exclude-mapping path="*.txt"/>
+            <mvc:exclude-mapping path="*.html"/>
+            <mvc:exclude-mapping path="*.eot"/>
+            <mvc:exclude-mapping path="*.svg"/>
+            <mvc:exclude-mapping path="*.ttf"/>
+            <mvc:exclude-mapping path="*.woff"/>
+            <mvc:exclude-mapping path="*.woff2"/>
+            <mvc:exclude-mapping path="*.doc"/>
+            <mvc:exclude-mapping path="*.docx"/>
+            <mvc:exclude-mapping path="*.xlsx"/>
+            <mvc:exclude-mapping path="*.txt"/>
+            <mvc:exclude-mapping path="*.zip"/>
+            <bean class="cn.yznu.imssra.interceptor.SessionTimeoutInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <!--<mvc:annotation-driven/>-->
     <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>

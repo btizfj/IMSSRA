@@ -27,7 +27,7 @@
 
 <div class="container" style="margin-top:200px" align="center">
 
-    <a href="${url}" class="text-primary">文件已生成，点击下载</a>
+    <a href="${pageContext.request.contextPath}/downloadFile?type=0" class="text-primary" download="${url}">文件已生成，点击下载</a>
 
 </div>
 </body>

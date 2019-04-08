@@ -49,7 +49,11 @@ function doAjax() {
             {
                 $("#_hint").show()
                 $("#_loading").hide()
-            }else {//登陆成功
+            }else if(msg == "close"){
+                alert("网站已经关闭，请联系管理员打开网站！")
+                $("#_loading").hide()
+                $("#_hint").hide()
+            } else {//登陆成功
                 // window.self.location = "http://localhost:8080/IMSSRA/"+msg+"/?type=0"
                 window.self.location = getRootPath()+"/"+msg+"/?type=0"
             }

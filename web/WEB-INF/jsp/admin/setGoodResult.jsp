@@ -107,6 +107,9 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/adminMain" onclick="openModel()">成果查看</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/myMessage" onclick="openModel()">我的消息</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/resultTrial" onclick="openModel()">成果审核</a>
             </li>
             <li class="nav-item">
@@ -122,7 +125,10 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/closeWebsite" onclick="openModel()">运行时段</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/notificationManagement" onclick="openModel()">通知管理</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/deliverManagement" onclick="openModel()">发布通知</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/notificationManagement" onclick="openModel()">管理通知</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/exportInfo" onclick="openModel()">信息导出</a>
@@ -219,7 +225,7 @@
                     <td>${isGoodResule[result.isgood]}</td>
                     <c:choose>
                         <c:when test="${result.isgood == 0}">
-                            <td><a href="${pageContext.request.contextPath}/setGoodResultById?result_id=${result.id}" class="text-primary" onclick="doSetGoodAjax()">确定</a></td>
+                            <td><a href="${pageContext.request.contextPath}/setGoodResultById?result_id=${result.id}" class="text-primary">确定</a></td>
                         </c:when>
                         <c:when test="${result.isgood == 1}">
                             <td><span style="color: green">已设</span></td>

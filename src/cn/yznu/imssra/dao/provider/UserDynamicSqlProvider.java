@@ -13,6 +13,70 @@ import static cn.yznu.imssra.util.constants.Constant.*;
 
 public class UserDynamicSqlProvider {
 
+    public String selectAllNotification(Map<String, Object> params){
+        String sql =  new SQL(){
+            {
+                SELECT("*");
+                FROM(NOTIFICATIONTABLE);
+            }
+        }.toString();
+        sql += " order by time desc ";
+        if(params.get("pageModel") != null){
+            sql += " limit #{pageModel.firstLimitParam} , #{pageModel.pageSize} ";
+        }
+        return sql;
+    }
+
+    public String selectAllAdminMessage(Map<String, Object> params){
+        String sql =  new SQL(){
+            {
+                SELECT("*");
+                FROM(MESSAGETABEL);
+                WHERE(" usertype=1 ");
+            }
+        }.toString();
+        sql += " order by time desc ";
+        if(params.get("pageModel") != null){
+            sql += " limit #{pageModel.firstLimitParam} , #{pageModel.pageSize} ";
+        }
+        return sql;
+    }
+
+    public String selectAllMessageByIdOfUser(Map<String, Object> params){
+        String sql =  new SQL(){
+            {
+                SELECT("*");
+                FROM(MESSAGETABEL);
+                WHERE(" user_id=#{user_id} ");
+            }
+        }.toString();
+        sql += " order by time desc ";
+        if(params.get("pageModel") != null){
+            sql += " limit #{pageModel.firstLimitParam} , #{pageModel.pageSize} ";
+        }
+        return sql;
+    }
+
+    public String updateCommentById(String result_comment, Integer result_id){
+        String SQL = "update " + COMMENTTABLE +" set comment='"+result_comment+"' where result_id="+result_id;
+        System.out.println(SQL);
+        return SQL;
+    }
+
+    public String selectResultBySearch(Integer rst_number,String rst_name){
+        String SQL = null;
+        switch (rst_number){
+            case 0:
+                SQL = "select * from " + RESULTTABLE +" where id="+rst_name;
+                break;
+            case 1:
+                SQL = "select * from " + RESULTTABLE +" where resultname LIKE '%"+rst_name+"%'";
+                break;
+        }
+        System.out.println(SQL);
+        return SQL;
+    }
+
     public String saveResultComment(String result_comment, Integer result_id){
         String SQL = "INSERT INTO "+ COMMENTTABLE +"(result_id, comment) VALUES("+result_id+", '"+result_comment+"')";
         System.out.println(SQL);
@@ -105,6 +169,37 @@ public class UserDynamicSqlProvider {
                 SELECT("*");
                 FROM(RESULTTABLE);
                 WHERE(" userid="+userid);
+            }
+        }.toString();
+        if(params.get("pageModel") != null){
+            sql += " limit #{pageModel.firstLimitParam} , #{pageModel.pageSize}  ";
+        }
+        System.out.println(sql.toString());
+        return sql.toString();
+    }
+
+    public String selectAllNotificationByPageAndType(Map<String, Object> params) {
+        int n_type = (int) params.get("n_type");
+        String sql =  new SQL(){
+            {
+                SELECT("*");
+                FROM(NOTIFICATIONTABLE);
+                WHERE(" type="+n_type);
+            }
+        }.toString();
+        if(params.get("pageModel") != null){
+            sql += " limit #{pageModel.firstLimitParam} , #{pageModel.pageSize}  ";
+        }
+        System.out.println(sql.toString());
+        return sql.toString();
+    }
+
+    public String selectAllGoodResultByPageAndType(Map<String, Object> params) {
+        String sql =  new SQL(){
+            {
+                SELECT("*");
+                FROM(RESULTTABLE);
+                WHERE(" isgood="+1);
             }
         }.toString();
         if(params.get("pageModel") != null){

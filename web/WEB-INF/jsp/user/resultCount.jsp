@@ -84,6 +84,9 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/userMainByType?type=0" onclick="openModel()">我的成果</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/myMessage" onclick="openModel()">我的消息</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/submitResult" onclick="openModel()">提交成果</a>
             </li>
             <li class="nav-item">
@@ -181,7 +184,7 @@
                     <td>${type_small[result.typesmall]}</td>
                     <td>${colleges[result.collegename]}</td>
                     <td>${trail_state[result.trailstate]}</td>
-                    <td><a href="${pageContext.request.contextPath}/upload/${result.filename}" class="text-primary">导出</a></td>
+                    <td><a href="${pageContext.request.contextPath}/downloadFile?type=1&rst_id=${result.id}" class="text-primary">导出</a></td>
                 </tr>
             </c:forEach>
             <!-- 分页标签 -->

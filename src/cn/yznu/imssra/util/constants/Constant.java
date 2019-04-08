@@ -7,6 +7,7 @@ public class Constant {
     public static final String WEBSITESTATETABLE = "imssra_website_state";//网站状态表（关闭和打开）
     public static final String NOTIFICATIONTABLE = "imssra_note_and_info";//通知和信息表
     public static final String COMMENTTABLE = "imssra_comment";//审核评语表
+    public static final String MESSAGETABEL = "imssra_message";//消息表
 
     public static final int TYPE_STUDENT = 0;//学生类型
     public static final int TYPE_TEACHER = 1;//老师类型

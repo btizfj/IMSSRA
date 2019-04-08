@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: XiaoMi
-  Date: 2019/4/6
-  Time: 22:00
+  Date: 2019/4/3
+  Time: 20:10
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>信息导出</title>
+    <title>我的消息</title>
     <link rel="icon" href="${pageContext.request.contextPath}/imgs/yznu_logo.jpg" type="image/x-icon"/>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/imgs/yznu_logo.jpg" type="image/x-icon"/>
     <meta charset="utf-8">
@@ -22,9 +22,11 @@
     <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <style type="text/css">
-        select{
-            margin-top: 10px;
-            margin-bottom: 10px;
+        td{
+            text-align: center;
+        }
+        thead{
+            text-align: center;
         }
     </style>
     <script language="JavaScript">
@@ -33,11 +35,11 @@
             var type_small = $("#type_small");
             var select_value = type_big.val();
             switch (select_value) {
-                case "-1"://所有大类
+                case "0"://所有大类
                     type_small.empty();
                     type_small.append("<option value=\"-1\">所有小类</option>");
                     break;
-                case "0":
+                case "1":
                     type_small.empty();
                     type_small.append("<option value=\"-1\">所有小类</option>");
                     type_small.append("<option value=\"0\">论文和专著</option>");
@@ -46,14 +48,14 @@
                     type_small.append("<option value=\"3\">外观设计专利</option>");
                     type_small.append("<option value=\"8\">其他</option>");
                     break;
-                case "1":
+                case "2":
                     type_small.empty();
                     type_small.append("<option value=\"-1\">所有小类</option>");
                     type_small.append("<option value=\"4\">自主研发的新产品原型</option>");
                     type_small.append("<option value=\"5\">自主开发的新技术</option>");
                     type_small.append("<option value=\"8\">其他</option>");
                     break;
-                case "2":
+                case "3":
                     type_small.empty();
                     type_small.append("<option value=\"-1\">所有小类</option>");
                     type_small.append("<option value=\"6\">基础软件</option>");
@@ -82,7 +84,7 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/adminMain" onclick="openModel()">成果查看</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/myMessage" onclick="openModel()">我的消息</a>
+                <a class="nav-link" href="#" onclick="openModel()" style="color: aqua">我的消息</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/resultTrial" onclick="openModel()">成果审核</a>
@@ -94,7 +96,7 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/deleteResult" onclick="openModel()">删除成果</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/accountAssignment" onclick="openModel()">账号分配</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/accountAssignment">账号分配</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/closeWebsite" onclick="openModel()">运行时段</a>
@@ -106,7 +108,7 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/notificationManagement" onclick="openModel()">管理通知</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" style="color: aqua">信息导出</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/exportInfo" onclick="openModel()">信息导出</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/logout" onclick="openModel()">退出登录</a>
@@ -117,66 +119,44 @@
 <br>
 
 <div class="container" style="margin-top:80px">
-    <div class="card" align="center">
-        <div class="card-body">
-            <div class="row" align="center" style="margin-bottom: 20px;color: green">
-                <div class="col">
-                    <span>选择条件后可一键导出</span>
-                </div>
-            </div>
-            <form action="${pageContext.request.contextPath}/exportResult">
-                <div class="row" align="center">
+    <form action="${pageContext.request.contextPath}/userMainByType">
 
-                    <select class="form-control" id="year" name="year">
-                        <option value="">所有年份</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                    </select>
-
-                    <select class="form-control" id="collegename" name="collegename">
-                        <option value="">所有学院</option>
-                        <option value="0">文学院</option>
-                        <option value="1">传媒学院</option>
-                        <option value="2">计算机学院</option>
-                        <option value="3">财经学院</option>
-                        <option value="4">管理学院</option>
-                        <option value="5">美术学院</option>
-                        <option value="6">体育学院</option>
-                        <option value="7">化工化学学院</option>
-                        <option value="8">外国语学院</option>
-                    </select>
-
-                    <select class="form-control" id="trialstate" name="trialstate">
-                        <option value="">所有状态</option>
-                        <option value="0">正在审核</option>
-                        <option value="1">审核失败</option>
-                        <option value="2">审核通过</option>
-                    </select>
-
-                    <select class="form-control" id="type_big" name="type_big" onchange="type_change()">
-                        <option value="">所有大类</option>
-                        <option value="0">基础理论成果</option>
-                        <option value="1">应用技术成果</option>
-                        <option value="2">软科学成果</option>
-                    </select>
-
-                    <select class="form-control" id="type_small" name="type_small">
-                        <option value="">所有小类</option>
-                    </select>
-
-                </div>
-                <div class="row" style="margin-top: 20px">
-                    <div class="col">
-                        <div class="col-sm-12 col-xl-2 col-md-4" style="line-height: 35px">
-                            <input type="hidden" id="type" name="type" value="0">
-                            <button type="submit" class="btn btn-primary btn">一键导出</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+    </form>
+    <div class="row" style="margin-top: 10px">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>消息内容</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${messages}" var="message" varStatus="stat">
+                    <tr>
+                        <td>${stat.index+1}</td>
+                        <td>${message.content}</td>
+                        <td>${message.time}</td>
+                        <td><a href="${pageContext.request.contextPath}/deleteMessage?message_id=${message.id}" class="text-primary">删除</a></td>
+                    </tr>
+                </c:forEach>
+                <!-- 分页标签 -->
+                <tr valign="top">
+                    <td align="center" colspan="12" rowspan="2">
+                        <fkjava:pager
+                                pageIndex="${requestScope.pageModel.pageIndex}"
+                                pageSize="${requestScope.pageModel.pageSize}"
+                                recordCount="${requestScope.pageModel.recordCount}"
+                                submitUrl="${pageContext.request.contextPath}/myMessage"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+
     <!-- 模态框 -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-lg" style="margin-top: 270px" align="center">
@@ -187,6 +167,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>
-

@@ -4,13 +4,13 @@ import cn.yznu.imssra.bean.*;
 import cn.yznu.imssra.dao.UserDao;
 import cn.yznu.imssra.service.ImssraService;
 import cn.yznu.imssra.util.tag.PageModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -228,6 +228,11 @@ public class ImssraServiceImpl implements ImssraService {
     }
 
     @Override
+    public void updateComment(String result_comment, Integer result_id) {
+        userDao.updateCommentById(result_comment,result_id);
+    }
+
+    @Override
     public Comment findCommontByResultId(Integer result_id) {
         return userDao.selectCommontByResultId(result_id);
     }
@@ -235,5 +240,146 @@ public class ImssraServiceImpl implements ImssraService {
     @Override
     public void updateResult(Result result) {
         userDao.updateResult(result);
+    }
+
+    @Override
+    public  List<Result> findResultBySearch(Integer rst_number,String rst_name) {
+        return userDao.selectResultBySearch(rst_number,rst_name);
+    }
+
+    @Override
+    public List<Notification> findAllNotificationByPageAndType(Integer n_type, PageModel pageModel) {
+        /** 当前需要分页的总数据条数  */
+        Map<String,Object> params = new HashMap<>();
+        int recordCount = userDao.countAllNotificationByPageAndType(n_type);
+        pageModel.setRecordCount(recordCount);
+        if(recordCount > 0){
+            /** 开始分页查询数据：查询第几页的数据 */
+            params.put("pageModel", pageModel);
+            params.put("n_type", n_type);
+        }
+        return userDao.selectAllNotificationByPageAndType(params);
+    }
+
+    @Override
+    public List<Result> findAllGoodResultByPage(PageModel pageModel) {
+        /** 当前需要分页的总数据条数  */
+        Map<String,Object> params = new HashMap<>();
+        int recordCount = userDao.countAllGoodResultByPage();
+        pageModel.setRecordCount(recordCount);
+        if(recordCount > 0){
+            /** 开始分页查询数据：查询第几页的数据 */
+            params.put("pageModel", pageModel);
+        }
+        return userDao.selectAllGoodResultByPageAndType(params);
+    }
+
+    @Override
+    public List<Message> findMessageByUserId(Integer userid, PageModel pageModel) {
+        System.out.println("userid:"+userid);
+        /** 当前需要分页的总数据条数  */
+        Map<String,Object> params = new HashMap<>();
+        int recordCount = userDao.countAllMessageByUserId(userid);
+        pageModel.setRecordCount(recordCount);
+        if(recordCount > 0){
+            /** 开始分页查询数据：查询第几页的数据 */
+            params.put("pageModel", pageModel);
+            params.put("user_id", userid);
+        }
+        List<Message> messages = null;
+        messages = userDao.selectAllMessageByUserId(params);
+        return messages;
+    }
+
+    @Override
+    public List<Message> findAdminMessage(PageModel pageModel) {
+        /** 当前需要分页的总数据条数  */
+        Map<String,Object> params = new HashMap<>();
+        int recordCount = userDao.countAllAdminMessage();
+        System.out.println(recordCount);
+        pageModel.setRecordCount(recordCount);
+        if(recordCount > 0){
+            /** 开始分页查询数据：查询第几页的数据 */
+            params.put("pageModel", pageModel);
+        }
+        List<Message> messages = null;
+        messages = userDao.selectAllAdminMessage(params);
+        return messages;
+    }
+
+    @Override
+    public void removeMessageByMessageId(Integer message_id) {
+        userDao.deleteMessageByUserId(message_id);
+    }
+
+    @Override
+    public void saveMessage1(Integer userid, Integer result_id, Date date) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("user_id", userid);
+        params.put("result_id", "恭喜您！编号为："+result_id+"的成果已经被管理员设置为优秀成果！");
+        params.put("date", date);
+//        params.put("usertype", 1);
+        userDao.insertMessage1(params);
+    }
+
+    @Override
+    public void saveMessage2(Integer userid, Integer result_id, Integer result_trialstate, Date time) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("user_id", userid);
+        if (result_trialstate == 1){
+            params.put("result_id", "您好！编号为："+result_id+"的成果已经被管理员驳回审核，请修改后重新提交！");
+        }else {
+            params.put("result_id", "您好！编号为："+result_id+"的成果已经被管理员通过审核！");
+        }
+        params.put("date", time);
+//        params.put("usertype", 1);
+        userDao.insertMessage2(params);
+    }
+
+    @Override
+    public void saveMessageForSubmit(Date date) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("content", "有用户提交成果，请审核！");
+        params.put("date", date);
+        userDao.insertMessageForSubmit(params);
+    }
+
+    @Override
+    public void saveMessageForModify(Date date) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("content", "有用户修改成果，请重新审核！");
+        params.put("date", date);
+        userDao.insertMessageForModify(params);
+    }
+
+    @Override
+    public void removeUserById(Integer id) {
+        userDao.deleteUserById(id);
+    }
+
+    @Override
+    public void removeResultById(Integer id) {
+        userDao.deleteResultById(id);
+    }
+
+    @Override
+    public List<Notification> findAllNotification(PageModel pageModel) {
+        /** 当前需要分页的总数据条数  */
+        Map<String,Object> params = new HashMap<>();
+        int recordCount = userDao.countAllNotification();
+        System.out.println(recordCount);
+        pageModel.setRecordCount(recordCount);
+        if(recordCount > 0){
+            /** 开始分页查询数据：查询第几页的数据 */
+            params.put("pageModel", pageModel);
+        }
+        List<Notification> notifications = null;
+        notifications = userDao.selectAllNotification(params);
+        return notifications;
+    }
+
+    @Override
+    public void removeNotificationById(Integer id) {
+        userDao.deleteNotificationById(id);
     }
 }

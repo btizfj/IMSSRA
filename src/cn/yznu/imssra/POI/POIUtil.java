@@ -3,12 +3,15 @@ package cn.yznu.imssra.POI;
 import cn.yznu.imssra.bean.Result;
 import cn.yznu.imssra.bean.User;
 import cn.yznu.imssra.service.ImssraService;
+import cn.yznu.imssra.util.MyUtil;
+import com.sun.deploy.net.HttpResponse;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,11 +24,15 @@ import static cn.yznu.imssra.util.constants.Constant.*;
  */
 public class POIUtil {
 
-    public static String generateDocx(List<Result> results, ImssraService imssraService, HttpServletRequest request) throws IOException {
+    public static String generateDocx(List<Result> results, ImssraService imssraService, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         int currentRow = 0;//记录当前行
         FileOutputStream output = null;
         String bashPath = request.getSession().getServletContext().getRealPath("/upload");
+        File f = new File(bashPath);
+        if (!f.exists()){
+            f.mkdirs();
+        }
         //创建一个Excel对象
         XSSFWorkbook wb = new XSSFWorkbook();
         //创建表单Sheet对象
@@ -87,6 +94,8 @@ public class POIUtil {
             cell_8.setCellValue(realName);
             cell_9.setCellValue(result.getInstruction());
 
+            System.out.println("bashPath:"+bashPath);
+
             File file = new File(bashPath, "info.xlsx");
             if(!file.exists()){
                 try {
@@ -102,6 +111,12 @@ public class POIUtil {
         }
         output.flush();
         output.close();
-        return bashPath+ File.separator+"导出信息.xlsx";
+//        try {
+//            MyUtil.download("info.xlsx",bashPath,request,response);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return bashPath+ File.separator+"导出信息.xlsx";
+        return bashPath;
     }
 }

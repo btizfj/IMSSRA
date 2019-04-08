@@ -38,6 +38,15 @@
         $("#_loading").hide()
       });
     });
+    function onClickResultSearch() {
+      window.open("${pageContext.request.contextPath}/resultSearch");
+    }
+    function onClickNotification(t) {
+      window.open("${pageContext.request.contextPath}/viewAllNotificationByPage?n_type="+t);
+    }
+    function onClickShowGoodResult() {
+      window.open("${pageContext.request.contextPath}/viewAllGoodResultByPage");
+    }
   </script>
   <style type="text/css">
     #grad {
@@ -74,16 +83,16 @@
       <button type="button" class="my_btn" data-toggle="modal" data-target="#myModal">登录系统</button>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
-      <button type="button" class="my_btn">成果查询</button>
+      <button type="button" class="my_btn" onclick="onClickResultSearch()">成果查询</button>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
-      <button type="button" class="my_btn">通知公告</button>
+      <button type="button" class="my_btn" onclick="onClickNotification(0)">通知公告</button>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
-      <button type="button" class="my_btn">成果展示</button>
+      <button type="button" class="my_btn" onclick="onClickShowGoodResult()">成果展示</button>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
-      <button type="button" class="my_btn">信息公开</button>
+      <button type="button" class="my_btn" onclick="onClickNotification(1)">信息公开</button>
     </div>
     <!--</div>-->
   </div>
@@ -93,40 +102,40 @@
         <div class="row">
           <div class="col">
             <h1 style="color: #159957;margin-top: 30px">通知公告</h1>
-            <hr style="color: green">
+            <hr>
             <h5 style="color: gray;margin-top: 20px;margin-bottom: 20px">通知公告公布网站的通知公告</h5>
             <c:forEach items="${notes}" var="note" varStatus="status">
-              <a href="${pageContext.request.contextPath}/viewNotificationDetail?type=0&id=${note.id}" class="text-muted">${status.index+1}.${note.title}</a><br>
+              <a href="${pageContext.request.contextPath}/viewNotificationDetail?type=0&id=${note.id}" target="_blank" class="text-muted">${status.index+1}.${note.title}</a><br>
             </c:forEach>
-            <a href="#" class="text-primary" style="color: deepskyblue">更多通知</a><br>
+            <a href="${pageContext.request.contextPath}/viewAllNotificationByPage?n_type=0" target="_blank" class="text-primary" style="color: deepskyblue">更多通知</a><br>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <h1 style="color: #159957;margin-top: 30px">成果展示</h1>
-            <hr style="color: green">
+            <hr>
             <h5 style="color: gray;margin-top: 20px;margin-bottom: 20px">展示网站上的优秀项目</h5>
             <c:forEach items="${goodResult}" var="result" varStatus="status">
-              <a href="${pageContext.request.contextPath}/viewResultDetail?result_id=${result.id}" class="text-muted">${status.index+1}.${result.resultname}</a><br>
+              <a href="${pageContext.request.contextPath}/viewResultDetail?result_id=${result.id}" target="_blank" class="text-muted">${status.index+1}.${result.resultname}</a><br>
             </c:forEach>
-            <a href="#" class="text-primary" style="color: deepskyblue">更多展示</a><br>
+            <a href="${pageContext.request.contextPath}/viewAllGoodResultByPage" target="_blank" class="text-primary" style="color: deepskyblue">更多展示</a><br>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <h1 style="color: #159957;margin-top: 30px">信息公开</h1>
-            <hr style="color: green">
+            <hr style=">
             <h5 style="color: gray;margin-top: 20px;margin-bottom: 20px">发布网站的公开信息</h5>
             <c:forEach items="${infos}" var="info" varStatus="status">
-              <a href="${pageContext.request.contextPath}/viewNotificationDetail?type=1&id=${info.id}" class="text-muted">${status.index+1}.${info.title}</a><br>
+              <a href="${pageContext.request.contextPath}/viewNotificationDetail?type=1&id=${info.id}" target="_blank" class="text-muted">${status.index+1}.${info.title}</a><br>
             </c:forEach>
-            <a href="#" class="text-primary" style="color: deepskyblue">更多信息</a><br>
+            <a href="${pageContext.request.contextPath}/viewAllNotificationByPage?n_type=1" target="_blank" class="text-primary" style="color: deepskyblue">更多信息</a><br>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <h1 style="color: #159957;margin-top: 30px">致谢</h1>
-            <hr style="color: green">
+            <hr>
             <h6 style="color: gray;margin-top: 20px;margin-bottom: 20px">感谢腾讯云服务器提供技术支持。</h6>
             <h6 style="color: gray;margin-top: 20px;margin-bottom: 20px">感谢GitHub提供技术支持。</h6>
           </div>
@@ -134,7 +143,7 @@
         <div class="row">
           <div class="col">
             <h1 style="color: #159957;margin-top: 30px">联系作者</h1>
-            <hr style="color: green">
+            <hr>
             <h6 style="color: gray;margin-top: 20px;margin-bottom: 20px">邮箱：1490785540@qq.com</h6>
             <h6 style="color: gray;margin-top: 20px;margin-bottom: 20px">电话：18580451667</h6>
           </div>
@@ -142,9 +151,9 @@
         <div class="row">
           <div class="col">
             <h1 style="color: #159957;margin-top: 30px">版权所有</h1>
-            <hr style="color: green">
-            <h6 style="color: gray;margin-top: 20px;margin-bottom: 20px">此项目为本人的本科毕业设计，未经本人允许，不得参与以营利目的活动。</h6>
-            <h6 style="color: gray;margin-top: 20px;margin-bottom: 20px">项目已提交至GitHub：<a class="text-primary" href="https://github.com/IMSSRA">https://github.com/IMSSRA</a></h6>
+            <hr>
+            <h6 style="color: gray;margin-top: 20px;margin-bottom: 20px">此项目为本人的本科毕业设计，未经本人允许，不得参与以营利为目的活动。</h6>
+            <h6 style="color: gray;margin-top: 20px;margin-bottom: 20px">项目已提交至GitHub：<a class="text-primary" href="https://github.com/BTIZFJ/IMSSRA">https://github.com/BTIZFJ/IMSSRA</a></h6>
           </div>
         </div>
       </div>

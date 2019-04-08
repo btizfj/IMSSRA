@@ -3,6 +3,7 @@ package cn.yznu.imssra.service;
 import cn.yznu.imssra.bean.*;
 import cn.yznu.imssra.util.tag.PageModel;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface ImssraService {
@@ -71,7 +72,42 @@ public interface ImssraService {
 
     void saveComment(String result_comment, Integer result_id);
 
+    void updateComment(String result_comment, Integer result_id);
+
     Comment findCommontByResultId(Integer result_id);
 
     void updateResult(Result result);
+
+    List<Result> findResultBySearch(Integer rst_number,String rst_name);
+
+    List<Notification> findAllNotificationByPageAndType(Integer n_type, PageModel pageModel);
+
+    List<Result> findAllGoodResultByPage(PageModel pageModel);
+
+    List<Message> findMessageByUserId(Integer userid, PageModel pageModel);
+
+    //查找管理员的消息
+    List<Message> findAdminMessage(PageModel pageModel);
+
+    void removeMessageByMessageId(Integer message_id);
+
+    //userid用户的成果result_id被设为优秀成果，时间为date
+    void saveMessage1(Integer userid, Integer result_id, Date date);
+
+    //管理员审核用户成果的消息
+    void saveMessage2(Integer userid, Integer result_id, Integer result_trialstate, Date time);
+
+    //发送成果提交信息
+    void saveMessageForSubmit(Date date);
+
+    //发送成果修改信息
+    void saveMessageForModify(Date date);
+
+    void removeUserById(Integer id);
+
+    void removeResultById(Integer id);
+
+    List<Notification> findAllNotification(PageModel pageModel);
+
+    void removeNotificationById(Integer id);
 }
