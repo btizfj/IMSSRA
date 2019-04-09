@@ -71,7 +71,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md bg-success navbar-dark fixed-top">
+<nav class="navbar navbar-expand-md bg-info navbar-dark fixed-top">
     <a class="navbar-brand" href="#">
         <img src="http://static.runoob.com/images/mix/bird.jpg" alt="logo" style="width:40px;border-radius: 50%">
     </a>
@@ -138,15 +138,16 @@
             <div class="col-sm-12 col-xl-2 col-md-4">
                 <select class="form-control" id="role" name="role">
                     <option value="-1">所有角色</option>
-                    <option value="0">学生/教师</option>
-                    <option value="1">管理人员</option>
+                    <option value="0">学生</option>
+                    <option value="1">教师</option>
+                    <option value="2">管理员</option>
                 </select>
             </div>
             <div class="col-sm-12 col-xl-2 col-md-4" style="line-height: 35px">
                 <button type="submit" class="btn btn-primary">立即查询</button>
             </div>
             <div class="col-sm-12 col-xl-2 col-md-4" style="line-height: 35px">
-                <a class="btn btn-primary" href="${pageContext.request.contextPath}/addUser" target="_blank">添加角色</a>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/addUser">添加角色</a>
             </div>
         </div>
     </form>
@@ -179,7 +180,7 @@
                     <td>${user.sex}</td>
                     <td>${user.phoneNumber}</td>
                     <td>${user.email}</td>
-                    <td><a href="${pageContext.request.contextPath}/deleteUserById?id=${user.id}" target="_blank" class="text-primary">删除</a></td>
+                    <td><a href="${pageContext.request.contextPath}/deleteUserById?id=${user.id}" class="text-primary">删除</a></td>
                 </tr>
             </c:forEach>
             <!-- 分页标签 -->
@@ -189,7 +190,7 @@
                             pageIndex="${requestScope.pageModel.pageIndex}"
                             pageSize="${requestScope.pageModel.pageSize}"
                             recordCount="${requestScope.pageModel.recordCount}"
-                            submitUrl="${pageContext.request.contextPath}/accountAssignment"/>
+                            submitUrl="${pageContext.request.contextPath}/accountAssignment?pageIndex={0}"/>
                 </td>
             </tr>
             </tbody>

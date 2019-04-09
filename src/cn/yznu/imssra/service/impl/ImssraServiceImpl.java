@@ -153,6 +153,10 @@ public class ImssraServiceImpl implements ImssraService {
             /** 开始分页查询数据：查询第几页的数据 */
             params.put("pageModel", pageModel);
         }
+        System.out.println("#{pageModel.firstLimitParam}:"+pageModel.getFirstLimitParam());
+        System.out.println("#{pageModel.pageSize}:"+pageModel.getPageSize());
+        System.out.println("#{pageModel.pageIndex}:"+pageModel.getPageIndex());
+        System.out.println("#{pageModel.recordCount}:"+pageModel.getRecordCount());
         List<Result> results = userDao.selectAllResults(params);
         return results;
     }
@@ -381,5 +385,10 @@ public class ImssraServiceImpl implements ImssraService {
     @Override
     public void removeNotificationById(Integer id) {
         userDao.deleteNotificationById(id);
+    }
+
+    @Override
+    public Notification findNotificationById(Integer rst_id) {
+        return userDao.selectNotificationById(rst_id);
     }
 }

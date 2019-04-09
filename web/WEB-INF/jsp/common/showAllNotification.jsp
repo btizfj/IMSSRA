@@ -31,7 +31,7 @@
 <body>
 
 <div class="container-fluid">
-    <div class="row" style="background: #15757A">
+    <div class="row" style="background: #17A2B8">
         <div class="col">
             <div style="padding: 20px;color: white" align="center">
                 <c:choose>
@@ -57,6 +57,7 @@
                             <h4 align="center">所有信息</h4>
                         </c:when>
                     </c:choose>
+                    <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                         <tr>
@@ -85,12 +86,12 @@
                                         pageIndex="${requestScope.pageModel.pageIndex}"
                                         pageSize="${requestScope.pageModel.pageSize}"
                                         recordCount="${requestScope.pageModel.recordCount}"
-                                        submitUrl="${pageContext.request.contextPath}/viewAllNotificationByPage?n_type=${n_type}"/>
+                                        submitUrl="${pageContext.request.contextPath}/viewAllNotificationByPage?n_type=${n_type}&pageIndex={0}"/>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-
+                    </div>
                 </div>
             </div>
         </div>

@@ -17,14 +17,14 @@ public class Constant {
     public static final String colleges[] = {"文学院","传媒学院","计算机学院","财经学院","管理学院","美术学院","体育学院","化工化学学院","外国语学院"};
 
     //每一页显示的最大条目数量
-    public static final int PAGE_DEFAULT_SIZE = 15;
+    public static int PAGE_DEFAULT_SIZE = 5;
 
     //是否为优秀项目
     public static final String isGoodResule[] = {"否","是"};
     //通知类型
     public static final String resultType[] = {"通知公告","公开信息"};
     //用户类型
-    public static final String userType[] = {"普通","普通","管理员"};
+    public static final String userType[] = {"学生","老师","管理员"};
 
     //审核状态
     public static final String trail_state[] = {"正在审核","审核失败","审核通过"};

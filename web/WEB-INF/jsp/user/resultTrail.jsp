@@ -35,32 +35,32 @@
             var type_small = $("#type_small");
             var select_value = type_big.val();
             switch (select_value) {
-                case "0"://所有大类
+                case "-1"://所有大类
                     type_small.empty();
-                    type_small.append("<option value=\"0\">所有小类</option>");
+                    type_small.append("<option value=\"-1\">所有小类</option>");
+                    break;
+                case "0":
+                    type_small.empty();
+                    type_small.append("<option value=\"-1\">所有小类</option>");
+                    type_small.append("<option value=\"0\">论文和专著</option>");
+                    type_small.append("<option value=\"1\">发明专利</option>");
+                    type_small.append("<option value=\"2\">实用新型专利</option>");
+                    type_small.append("<option value=\"3\">外观设计专利</option>");
+                    type_small.append("<option value=\"8\">其他</option>");
                     break;
                 case "1":
                     type_small.empty();
-                    type_small.append("<option value=\"0\">所有小类</option>");
-                    type_small.append("<option value=\"1\">论文和专著</option>");
-                    type_small.append("<option value=\"2\">发明专利</option>");
-                    type_small.append("<option value=\"3\">实用新型专利</option>");
-                    type_small.append("<option value=\"4\">外观设计专利</option>");
-                    type_small.append("<option value=\"5\">其他</option>");
+                    type_small.append("<option value=\"-1\">所有小类</option>");
+                    type_small.append("<option value=\"4\">自主研发的新产品原型</option>");
+                    type_small.append("<option value=\"5\">自主开发的新技术</option>");
+                    type_small.append("<option value=\"8\">其他</option>");
                     break;
                 case "2":
                     type_small.empty();
-                    type_small.append("<option value=\"0\">所有小类</option>");
-                    type_small.append("<option value=\"1\">自主研发的新产品原型</option>");
-                    type_small.append("<option value=\"2\">自主开发的新技术</option>");
-                    type_small.append("<option value=\"3\">其他</option>");
-                    break;
-                case "3":
-                    type_small.empty();
-                    type_small.append("<option value=\"0\">所有小类</option>");
-                    type_small.append("<option value=\"1\">基础软件</option>");
-                    type_small.append("<option value=\"2\">应用软件</option>");
-                    type_small.append("<option value=\"3\">其他</option>");
+                    type_small.append("<option value=\"-1\">所有小类</option>");
+                    type_small.append("<option value=\"6\">基础软件</option>");
+                    type_small.append("<option value=\"7\">应用软件</option>");
+                    type_small.append("<option value=\"8\">其他</option>");
                     break;
             }
         }
@@ -71,7 +71,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md bg-success navbar-dark fixed-top">
+<nav class="navbar navbar-expand-md bg-info navbar-dark fixed-top">
     <a class="navbar-brand" href="#">
         <img src="http://static.runoob.com/images/mix/bird.jpg" alt="logo" style="width:40px;border-radius: 50%">
     </a>
@@ -194,7 +194,7 @@
                             pageIndex="${requestScope.pageModel.pageIndex}"
                             pageSize="${requestScope.pageModel.pageSize}"
                             recordCount="${requestScope.pageModel.recordCount}"
-                            submitUrl="${pageContext.request.contextPath}/userMainByType?type=1"/>
+                            submitUrl="${pageContext.request.contextPath}/userMainByType?type=1&pageIndex={0}"/>
                 </td>
             </tr>
             </tbody>

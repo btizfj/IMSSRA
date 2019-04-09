@@ -413,7 +413,7 @@ public class UserDynamicSqlProvider {
             }else {
                 sb.append(" and ");
             }
-            sb.append(" YEAR(time)= "+role);
+            sb.append(" usertype= "+role);
         }
         if (collegename != -1){
             if (!isAdd){
@@ -512,6 +512,9 @@ public class UserDynamicSqlProvider {
             sb.append(" and ");
         }
         sb.append(" userid="+userid);
+        if(params.get("pageModel") != null){
+            sb.append(" limit #{pageModel.firstLimitParam} , #{pageModel.pageSize} ");
+        }
         System.out.println(sb.toString());
         return sb.toString();
     }
@@ -664,6 +667,9 @@ public class UserDynamicSqlProvider {
             }
             sb.append(" typesmall="+typesmall);
         }
+        if(params.get("pageModel") != null){
+            sb.append(" limit #{pageModel.firstLimitParam} , #{pageModel.pageSize} ");
+        }
         System.out.println(sb.toString());
         return sb.toString();
     }
@@ -685,7 +691,7 @@ public class UserDynamicSqlProvider {
             }else {
                 sb.append(" and ");
             }
-            sb.append(" YEAR(time)= "+role);
+            sb.append(" usertype= "+role);
         }
         if (collegename != -1){
             if (!isAdd){
@@ -698,6 +704,9 @@ public class UserDynamicSqlProvider {
                 sb.append(" and ");
             }
             sb.append(" collegename="+collegename);
+        }
+        if(params.get("pageModel") != null){
+            sb.append(" limit #{pageModel.firstLimitParam} , #{pageModel.pageSize} ");
         }
         System.out.println(sb.toString());
         return sb.toString();

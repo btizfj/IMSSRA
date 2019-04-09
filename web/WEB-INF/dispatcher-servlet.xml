@@ -22,6 +22,7 @@
             <mvc:exclude-mapping path="/resultSearch"/>
             <mvc:exclude-mapping path="/viewAllNotificationByPage"/>
             <mvc:exclude-mapping path="/sessionTimeout"/>
+            <mvc:exclude-mapping path="/downloadFile"/>
             <mvc:exclude-mapping path="*.jpeg"/>
             <mvc:exclude-mapping path="*.jpg"/>
             <mvc:exclude-mapping path="*.png"/>

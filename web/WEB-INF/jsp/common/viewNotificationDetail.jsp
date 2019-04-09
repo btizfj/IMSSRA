@@ -22,7 +22,7 @@
 <body>
 
 <div class="container-fluid">
-    <div class="row" style="background: #15757A">
+    <div class="row" style="background: #17A2B8">
         <div class="col">
             <div style="padding: 20px;color: white" align="center">
                 <h1>通知详情</h1>
@@ -41,7 +41,7 @@
                     </div>
                     <div><span>通知类型：</span>${resultType[notification.type]}</div>
                     <div><span>时间：</span>${notification.time}</div>
-                    <div><span style="color: #004444">附件：</span><a href="${pageContext.request.contextPath}/upload/${notification.filename}" class="text-primary">${notification.filename}</a></div>
+                    <div><span style="color: #004444">附件：</span><a href="${pageContext.request.contextPath}/downloadFile?type=2&rst_id=${notification.id}" class="text-primary">${notification.filename}</a></div>
                 </div>
             </div>
         </div>

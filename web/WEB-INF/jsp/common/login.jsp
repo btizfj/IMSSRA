@@ -124,7 +124,7 @@
         <div class="row">
           <div class="col">
             <h1 style="color: #159957;margin-top: 30px">信息公开</h1>
-            <hr style=">
+            <hr>
             <h5 style="color: gray;margin-top: 20px;margin-bottom: 20px">发布网站的公开信息</h5>
             <c:forEach items="${infos}" var="info" varStatus="status">
               <a href="${pageContext.request.contextPath}/viewNotificationDetail?type=1&id=${info.id}" target="_blank" class="text-muted">${status.index+1}.${info.title}</a><br>

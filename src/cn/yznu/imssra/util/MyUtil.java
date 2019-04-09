@@ -1,6 +1,7 @@
 package cn.yznu.imssra.util;
 
 import cn.yznu.imssra.bean.User;
+import cn.yznu.imssra.util.tag.PageModel;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +45,16 @@ public class MyUtil {
      */
     public static String addMsg(String msg){
         return "'"+msg+"'";
+    }
+
+    public static PageModel makePageModel(Integer pageIndex){
+        // 创建分页对象
+        PageModel pageModel = new PageModel();
+        // 如果参数pageIndex不为null，设置pageIndex，即显示第几页
+        if(pageIndex != null){
+            pageModel.setPageIndex(pageIndex);
+        }
+        return pageModel;
     }
 
 }

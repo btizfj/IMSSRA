@@ -1,8 +1,6 @@
-package cn.yznu.imssra.controller;
+package cn.yznu.imssra.controller.fileController;
 
-import cn.yznu.imssra.util.MyUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.UUID;
 
 @Controller

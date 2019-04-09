@@ -110,4 +110,6 @@ public interface ImssraService {
     List<Notification> findAllNotification(PageModel pageModel);
 
     void removeNotificationById(Integer id);
+
+    Notification findNotificationById(Integer rst_id);
 }

@@ -71,7 +71,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md bg-success navbar-dark fixed-top">
+<nav class="navbar navbar-expand-md bg-info navbar-dark fixed-top">
     <a class="navbar-brand" href="#">
         <img src="http://static.runoob.com/images/mix/bird.jpg" alt="logo" style="width:40px;border-radius: 50%">
     </a>
@@ -151,7 +151,7 @@
                                 pageIndex="${requestScope.pageModel.pageIndex}"
                                 pageSize="${requestScope.pageModel.pageSize}"
                                 recordCount="${requestScope.pageModel.recordCount}"
-                                submitUrl="${pageContext.request.contextPath}/notificationManagement"/>
+                                submitUrl="${pageContext.request.contextPath}/notificationManagement?pageIndex={0}"/>
                     </td>
                 </tr>
                 </tbody>

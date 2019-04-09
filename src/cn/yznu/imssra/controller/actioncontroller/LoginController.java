@@ -30,14 +30,10 @@ public class LoginController {
     private ImssraService imssraService;
 
     /**
-     * 账号密码验证
-     * @param request
-     * @param response
-     * @param session
-     * @throws Exception
+     * 账号密码验证（登录前验证账号密码）
      */
     @RequestMapping(value="/usernameAndPasswordCheck",method= RequestMethod.POST)
-    public void judgeyouxiang(HttpServletRequest request, HttpServletResponse response, HttpSession session)throws Exception{
+    public void usernameAndPasswordCheck(HttpServletRequest request, HttpServletResponse response, HttpSession session)throws Exception{
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String usertype = request.getParameter("usertype");
@@ -70,8 +66,6 @@ public class LoginController {
 
     /**
      * 退出登录
-     * @param session
-     * @return
      */
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session, Model model){

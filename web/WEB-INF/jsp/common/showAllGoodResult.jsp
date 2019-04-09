@@ -25,7 +25,7 @@
 <body>
 
 <div class="container-fluid">
-    <div class="row" style="background: #15757A">
+    <div class="row" style="background: #17A2B8">
         <div class="col">
             <div style="padding: 20px;color: white" align="center">
                 <h1>成果展示</h1>
@@ -37,6 +37,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 align="center">所有优秀成果</h4>
+                    <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                         <tr>
@@ -70,12 +71,12 @@
                                         pageIndex="${requestScope.pageModel.pageIndex}"
                                         pageSize="${requestScope.pageModel.pageSize}"
                                         recordCount="${requestScope.pageModel.recordCount}"
-                                        submitUrl="${pageContext.request.contextPath}/viewAllGoodResultByPage"/>
+                                        submitUrl="${pageContext.request.contextPath}/viewAllGoodResultByPage?pageIndex={0}"/>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-
+                    </div>
                 </div>
             </div>
         </div>

@@ -22,8 +22,6 @@ public interface UserDao {
     @Select("select * from " + USERTABLE + " where id=#{id}")
     User selectUserById(int id);
 
-//    @Insert("INSERT INTO "+ RESULTTABLE +"(resultname, collegename, typebig, typesmall,desc,detail,instruction,filename,trailstate,time) VALUES(#{resultname}, #{collegename}, #{typebig}, #{typesmall}, #{desc}, #{detail}, #{instruction}, #{filename}, #{trailstate}, #{time})")
-//    @Options(useGeneratedKeys = true, keyProperty = "id",keyColumn = "id")
     @UpdateProvider(type= UserDynamicSqlProvider.class,method="insertResultToDB")
     void insertResultToDB(Result result);
 
@@ -87,8 +85,6 @@ public interface UserDao {
     @SelectProvider(type=UserDynamicSqlProvider.class,method="selectAllUsers")
     List<User> selectAllUsers(Map<String, Object> params);
 
-//    @Insert("INSERT INTO "+ USERTABLE +"(username,password,usertype,collegeName) VALUES(#{username},#{password},#{role}, #{collegename})")
-//    @Options(useGeneratedKeys = true, keyProperty = "id",keyColumn = "id")
     @SelectProvider(type=UserDynamicSqlProvider.class,method="insertUser")
     void insertUser(String username, String password, Integer collegename, Integer role);
 
@@ -108,19 +104,15 @@ public interface UserDao {
     @Select("select * from " + RESULTTABLE + " where isgood=1 limit 5")
     List<Result> select5GoodResult();
 
-//    @Select("select * from " + NOTIFICATIONTABLE + " where type=#{type} and id=#{id}")
     @SelectProvider(type=UserDynamicSqlProvider.class,method="selectNotificationByIdAndType")
     Notification selectNotificationByIdAndType(Integer type, Integer id);
 
     @Select("update " + RESULTTABLE + " set isgood=1 where id=#{result_id}")
     void updateGoodState(Integer result_id);
 
-//    @Select("update " + RESULTTABLE + " set trailstate=#{result_trialstate} where id=#{result_id}")
     @SelectProvider(type=UserDynamicSqlProvider.class,method="updateTrialState")
     void updateTrialState(Integer result_id, Integer result_trialstate);
 
-//    @Insert("INSERT INTO "+ RESULTTABLE +"(result_id, comment) VALUES(#{result_id}, #{result_comment})")
-//    @Options(useGeneratedKeys = true, keyProperty = "id",keyColumn = "id")
     @SelectProvider(type=UserDynamicSqlProvider.class,method="saveResultComment")
     void saveResultComment(String result_comment, Integer result_id);
 
@@ -149,7 +141,6 @@ public interface UserDao {
     void updateCommentById(String result_comment, Integer result_id);
 
     @SelectProvider(type=UserDynamicSqlProvider.class,method="selectAllMessageByIdOfUser")
-//    @Select("select count(*) from " + MESSAGETABEL + " where user_id=#{userid}")
     List<Message> selectAllMessageByUserId(Map<String, Object> params);
 
     @Delete("delete from " + MESSAGETABEL + " where id=#{message_id}")
@@ -190,4 +181,7 @@ public interface UserDao {
 
     @Delete("delete from " + NOTIFICATIONTABLE + " where id=#{id}")
     void deleteNotificationById(Integer id);
+
+    @Select("select * from " + NOTIFICATIONTABLE + " where id=#{rst_id}")
+    Notification selectNotificationById(Integer rst_id);
 }
